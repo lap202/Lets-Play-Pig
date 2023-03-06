@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Pig";
+}
+
+<div class="row">
+   <div class="col-md-7 col-sm-12">
+       <table class="table table-bordered">
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-9">
+                            <p>Player 1: </p>
+                            <p>Player 2: </p>
+                        </div>
+                        <div class="col-3">
+                            <a asp-action="" class="btn btn-outline-dark">New Game</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4 class="mb-4">Player #'s turn</h4>
+                    <a asp-action="" class="btn btn-dark">Roll</a>
+                    <a asp-action="" class="btn btn-outline-dark">Hold</a>
+                </td>
+            </tr>
+       </table>
+   </div>
+
+   <div class="col-md-5 col-sm-12">
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    First player to 20 wins.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Players take turns rolling the die.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Turn ends when player rolls a 1 or chooses to hold
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    If player rolls a 1, they lose all points earned during that turn.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    If player holds, points earned during that turn are added to their total.
+                </td>
+            </tr>
+        </table>
+   </div>
+</div>
+<div class="row">
+    <div class="col-12 jumbotron bg-dark text-white text-center mt-3">
+        <h2 class="">Player # wins!</h2>
+    </div>
+</div>
