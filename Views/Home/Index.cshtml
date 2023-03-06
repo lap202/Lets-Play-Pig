@@ -2,10 +2,18 @@
 @{
     ViewData["Title"] = "Pig";
     string winnerDisplay = "";
+    bool buttonsDisabled = false;
+    int lastRoll = (Context.Session.GetInt32("LastRoll") ?? 0);
+    bool gameOver = false;
 
     if (string.IsNullOrEmpty(Context.Session.GetString("Winner")))
     {
         winnerDisplay = "d-none";
+    }
+    else
+    {
+        buttonsDisabled = true;
+        gameOver = true;
     }
 }
 
@@ -27,10 +35,63 @@
             </tr>
             <tr>
                 <td>
-                    <h4 class="mb-4">Player @Context.Session.GetString("whosTurn")'s turn</h4>
-                    <a asp-action="Roll" class="btn btn-dark">Roll</a>
-                    <a asp-action="Hold" class="btn btn-outline-dark">Hold</a>
-                    <p class="d-inline">Die: @Context.Session.GetInt32("Die") Total: @Context.Session.GetInt32("Total")</p>
+                    <div class="row">
+                        <div class="col-9">
+                            @{
+                                if (gameOver)
+                                {
+                                    <h4 class="mb-4">Game Over</h4>
+                                }
+                                else
+                                {
+                                    <h4 class="mb-4">@Context.Session.GetString("whosTurn")'s turn</h4>
+                                }
+                            }
+                            
+                            @{
+                                if (buttonsDisabled)
+                                {
+                                    <a class="btn btn-secondary">Roll</a>
+                                    <a class="btn btn-secondary">Hold</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Roll" class="btn btn-dark">Roll</a>
+                                    <a asp-action="Hold" class="btn btn-outline-dark">Hold</a>
+                                }
+                            }
+                            <p class="d-inline">Die: @Context.Session.GetInt32("Die") Total: @Context.Session.GetInt32("Total")</p>
+                        </div>
+                        <div class="col-3">
+                            @{
+                                if (lastRoll == 1)
+                                {
+                                    <h1 class="display-3 m-0 text-danger">⚀</h1>
+                                }
+                                else if (lastRoll == 2)
+                                {
+                                    <h1 class="display-3 m-0">⚁</h1>
+                                }
+                                else if (lastRoll == 3)
+                                {
+                                    <h1 class="display-3 m-0">⚂</h1>
+                                }
+                                else if (lastRoll == 4)
+                                {
+                                    <h1 class="display-3 m-0">⚃</h1>
+                                }
+                                else if (lastRoll == 5)
+                                {
+                                    <h1 class="display-3 m-0">⚄</h1>
+                                }
+                                else if (lastRoll == 6)
+                                {
+                                    <h1 class="display-3 m-0">⚅</h1>
+                                }
+                            }
+                        </div>
+                    </div>
+                    
                 </td>
             </tr>
        </table>
@@ -69,26 +130,5 @@
 <div class="row @winnerDisplay">
     <div class="col-12 jumbotron bg-dark text-white text-center mt-3">
         <h2 class="">@Context.Session.GetString("Winner") wins!</h2>
-    </div>
-</div>
-
-<!--Modal to display turn changes-->
-<div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
     </div>
 </div>
